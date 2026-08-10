@@ -1,0 +1,68 @@
+---
+- name: Update and upgrade packages
+  apt:
+    update_cache: yes
+    upgrade: safe
+
+- name: Create non-root user
+  user:
+    name: "{{ vps_user }}"
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    create_home: yes
+    password: "{{ 'Contraseña' | password_hash('sha512') }}"
+
+- name: Set up SSH directory for new user
+  file:
+    path: "/home/{{ vps_user }}/.ssh"
+    state: directory
+    owner: "{{ vps_user }}"
+    group: "{{ vps_user }}"
+    mode: '0700'
+
+- name: Copy root's authorized keys to the new user
+  copy:
+    src: "/root/.ssh/authorized_keys"
+    dest: "/home/{{ vps_user }}/.ssh/authorized_keys"
+    remote_src: yes
+    owner: "{{ vps_user }}"
+    group: "{{ vps_user }}"
+    mode: '0600'
+
+- name: Install UFW firewall
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow essential ports in UFWW
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ ufw_allowed_ports }}"
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
+- name: Harden SSH configuration
+  lineinfile:
+    path: /etc/ssh/ssh_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no'}
+    - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no'}
+  notify: Restart SSH
+
+- name: Install Fail2ban and Unattended-Upgrades
+  apt:
+    name:
+      - fail2ban
+      - unattended-upgrades
+    state: present
+
+- name: Set Timezone
+  timezone:
+    name: "{{ vps_timezone }}"  
