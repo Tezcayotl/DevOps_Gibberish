@@ -3,3 +3,4 @@ vps_user: "desarrollador"
 vps_timezone: "America/Mexico_City"
 ufw_allowed_ports:
   - '22'
+vps_password: 13579

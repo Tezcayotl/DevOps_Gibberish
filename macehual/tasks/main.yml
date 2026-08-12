@@ -11,7 +11,7 @@
     groups: sudo
     append: yes
     create_home: yes
-    password: "{{ 'Contraseña' | password_hash('sha512') }}"
+    password: "{{ vps_password | password_hash('sha512') }}"
 
 - name: Set up SSH directory for new user
   file:
@@ -35,7 +35,7 @@
     name: ufw
     state: present
 
-- name: Allow essential ports in UFWW
+- name: Allow essential ports in UFW
   ufw:
     rule: allow
     port: "{{ item }}"
@@ -48,7 +48,7 @@
 
 - name: Harden SSH configuration
   lineinfile:
-    path: /etc/ssh/ssh_config
+    path: /etc/ssh/sshd_config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
@@ -65,4 +65,20 @@
 
 - name: Set Timezone
   timezone:
-    name: "{{ vps_timezone }}"  
+    name: "{{ vps_timezone }}"
+
+# --- REBOOT HANDLING V_0 JUST FOR UBUNTU/DEBIAN ---
+
+- name: Check if a reboot is required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot the server if kernel/system updates require it
+  reboot:
+    msg: "Rebooting machiening automatically via Ansible due to system updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_deboot_delay: 300
+  when: reboot_required_file.stat.exists
