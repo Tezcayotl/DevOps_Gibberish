@@ -1,0 +1,16 @@
+- name: Install Astral uv via official installer
+  shell:
+    cmd: curl -LsSf https://astral.sh/uv/install.sh | sh
+# comment out to adjust tje path i installing uv globally
+#   creates: "{{ ansible_env.HOME }}/.local/bin/uv"
+
+- name: Add Helix editor PPA
+  apt_repository:
+    repo: ppa:maveonair/helix-editor
+    state: present
+
+- name: Install Helix editor
+  apt:
+    name: helix
+    state: present
+    update_cache: true
