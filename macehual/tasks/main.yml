@@ -54,7 +54,6 @@
   loop:
     - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no'}
     - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no'}
-  notify: Restart SSH
 
 - name: Install Fail2ban and Unattended-Upgrades
   apt:
@@ -73,6 +72,7 @@
 - name: Update connection variables for subsequent tasks
   set_fact:
     ansible_user: "{{ vps_user }}"
+    ansible_become_password: "{{ vps_password }}"
   
 # --- REBOOT HANDLING V_0 JUST FOR UBUNTU/DEBIAN ---
 
@@ -89,3 +89,4 @@
     pre_reboot_delay: 0
     post_reboot_delay: 300
   when: reboot_required_file.stat.exists
+  become: true
