@@ -18,10 +18,10 @@ crash.log
 crash.*.log
 
 # Exclude sensitive variable files (uncomment if you use local tfvars for secrets)
- *.tfvars
- *.auto.tfvars
- !*.auto.tfvars.json
- !example.tfvars
+*.tfvars
+*.auto.tfvars
+!*.auto.tfvars.json
+!example.tfvars
 
 # Override files
 override.tf
