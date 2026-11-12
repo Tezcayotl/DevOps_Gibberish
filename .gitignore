@@ -1,0 +1,52 @@
+# =========================================
+# TERRAFORM
+# =========================================
+
+# Local directory for modules and provider plugins
+.terraform/
+
+# Configuration files stored locally
+.terraformrc
+terraform.rc
+
+# Local state files (contains sensitive infrastructure details and plain-text secrets)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Exclude sensitive variable files (uncomment if you use local tfvars for secrets)
+# *.tfvars
+# *.auto.tfvars
+# !*.auto.tfvars.json
+# !example.tfvars
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan files
+*.tfplan
+
+# =========================================
+# ANSIBLE
+# =========================================
+
+# Retry files generated when playbooks fail
+*.retry
+
+# Ansible local cache and galaxy downloads
+.ansible/
+.cache/
+
+# Local collections and roles (uncomment if you manage them dynamically via requirements.yml)
+# collections/ansible_collections/
+# roles/external/
+
+# Local vault password files (never commit actual secrets)
+.vault_pass
+vault_pass.txt
