@@ -1,0 +1,9 @@
+---
+- hosts: vps1_root
+  roles:
+    - macehual
+
+- hosts: vps1
+  become: true
+  roles:
+    - bsc_dev

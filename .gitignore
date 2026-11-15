@@ -50,3 +50,6 @@ override.tf.json
 # Local vault password files (never commit actual secrets)
 .vault_pass
 vault_pass.txt
+
+#Ansible hosts fles for testing
+hosts.yml
