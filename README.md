@@ -6,25 +6,34 @@
 
 - [x] **Basic Ansible** Creating ansible roles to basic VPS hardening, and basic
 dev toolkit (i.e. UV package manager and Helix editor)
-- [ ] **Basic Terraform** Creating a Terraform app to provision simple VPS from
+- [x] **Basic Terraform** Creating a Terraform app to provision simple VPS from
 Digital Ocean
-- [ ] **Basic Shell Script** Orquestrate Terraform VPS set up and Ansible
-provisioning all from a .sh script
-- [ ] **One Purpose VPS systems** Modify scripts as needed (Ansible will likely
-need to include Docker registry and installation) to set up VPS, and provision
-them to serve software from a raw IP:Port direction.
-  - [ ] Odoo Community
-  - [ ] n8n
-  - [ ] Open Web UI
+- [ ] **Basic system orchestration** Orquestrate Terraform VPS set up and Ansible
+provisioning all from a .py script
+  - [ ] Include docker apt present status
+- [ ] Docker compose file for multiple apps infrastructure (carefull or properly
+handling volumes)
+  - [ ] Odoo Community (PostgreSQL and Caddy)
+  - [ ] n8n (PostgreSQL and Caddy)
+  - [ ] n8n + Odoo Community (PostgreSQL and Caddy)
+- [ ] Point CDN records manually to caddy, enable apps exposure through domains (
+  carefull of properly mapping volumes
+)
+- [ ] Terraform file to set up  CDN records
+- [ ] Enable S3 automated backups
+- [ ] Python orchestration to also include docker compose setup (perhaps by the
+Ansible docker module?)
+- [ ] Python orchestration to include caddy configuration
+- [ ] Python orchestration and Terraform tweaking to enable CDN records and S3 buckets
+- [ ] CLI Wrapper for the tool
 
 ## Upcoming goals
 
-- [ ] Adding nginx and certbot
-- [ ] Re-work One purpose VPS systems to include a nginx 'gate'
-- [ ] Build a VPS system integrating Odoo Community and n8n (with the respective)
-PostgreSQL database, exposing the Odoo API and having its nginx router
-- [ ] Re-work shell script to Terraform spin up, Ansible Provision and output
-a URL to open the software
+- [ ] Tinker with JupyerLite 
 - [ ] Tinker with Jupiter Lab prebuilt images in docker having all kernels I want
-- [ ] Tinket with Open Journal System and Janeway
+- [ ] Tinker with Open Journal System and Janeway
+- [ ] Make the docker compose files dynamic in function of passed desired images to
+deploy
+- [ ] Make the caddy and terraform files within the CLI dynamic accodring to a
+passed domain name.
 
