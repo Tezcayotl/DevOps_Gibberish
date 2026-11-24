@@ -53,3 +53,18 @@ vault_pass.txt
 
 #Ansible hosts fles for testing
 hosts.yml
+
+# =========================================
+# PYTHON
+# =========================================
+
+
+.env
+.venv/
+__pycache__/
+deployments/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
